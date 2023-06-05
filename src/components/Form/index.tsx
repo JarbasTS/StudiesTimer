@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '../Button';
 import S from './style.module.scss';
 import { ITarefa } from '../../types/tarefa';
+import { v4 as uuidv4 } from 'uuid';
 
 export function Form({
   setTarefas
@@ -15,7 +16,15 @@ export function Form({
 
   function addTarefa(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
-    setTarefas(tarefasAntigas => [...tarefasAntigas, data]);
+    setTarefas(tarefasAntigas => [
+      ...tarefasAntigas,
+      { ...data, selected: false, completed: false, id: uuidv4() }
+    ]);
+
+    setData({
+      tarefa: '',
+      tempo: '00:00:00'
+    });
   }
 
   return (
